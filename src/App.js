@@ -5,17 +5,19 @@ function QuoteBox({ quote, count, fetchQuote }) {
 
 
   return (
-    <div id="quote-box">
+    <div>
+    <div id="quote-box" >
       <div id='text'>
-        {quote.content}
+        <p>{quote.content}</p>
       </div>
       <div id='author'>
-        {quote.author}
+        <p>{quote.author}</p>
       </div>
       <div id='new-quote'>
         <button onClick={() => fetchQuote(count+1)}>New Quote</button>
       </div>
       <a href={`https://twitter.com/intent/tweet?text=${quote.content} - ${quote.author}`} id='tweet-quote'>Tweet!</a>
+    </div>
     </div>
   )
 }
