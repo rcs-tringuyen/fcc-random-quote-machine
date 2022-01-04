@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import './App.css';
 
-function QuoteBox({ quote }) {
+function QuoteBox({ quote, count, fetchQuote }) {
+
+
   return (
-    <div className="quote-box">
+    <div id="quote-box">
       <div id='text'>
         {quote.content}
       </div>
@@ -11,16 +13,17 @@ function QuoteBox({ quote }) {
         {quote.author}
       </div>
       <div id='new-quote'>
-        <button>New Quote</button>
+        <button onClick={() => fetchQuote(count+1)}>New Quote</button>
       </div>
-      <a href='' id='tweet-quote'>Tweet!</a>
+      <a href={`https://twitter.com/intent/tweet?text=${quote.content} - ${quote.author}`} id='tweet-quote'>Tweet!</a>
     </div>
   )
 }
 
 function App() {
 
-  const [quote, setQuote] = React.useState([]);
+  const [quote, setQuote] = React.useState({});
+  const [count, setCount] = React.useState(0);
 
   React.useEffect(() => {
     fetch("https://api.quotable.io/random")
@@ -30,14 +33,19 @@ function App() {
           setQuote(result);
         }
       )
-  }, []);
+  }, [count]);
 
-
+  const fetchQuote = () => {
+    const newQuote = [...quote];
+    setQuote(newQuote);
+  }
 
   return (
     <div className="App">
       <QuoteBox
         quote={quote}
+        count={count}
+        fetchQuote={setCount}
       />
     </div>
   );
